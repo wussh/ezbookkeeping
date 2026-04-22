@@ -172,6 +172,12 @@ import type {
 import type {
     RecognizedReceiptImageResponse
 } from '@/models/large_language_model.ts';
+import type {
+    PayLaterInstallmentPlanInfoResponse,
+    PayLaterPlanCreateRequest,
+    PayLaterInstallmentPayRequest,
+    PayLaterPlanDeleteRequest
+} from '@/models/paylater_plan.ts';
 
 import {
     getCurrentToken,
@@ -819,6 +825,23 @@ export default {
     },
     deleteUserCustomExchangeRate: (req: UserCustomExchangeRateDeleteRequest): ApiResponsePromise<boolean> => {
         return axios.post<ApiResponse<boolean>>('v1/exchange_rates/user_custom/delete.json', req);
+    },
+    getAllPayLaterPlans: ({ status }: { status?: number }): ApiResponsePromise<PayLaterInstallmentPlanInfoResponse[]> => {
+        let url = 'v1/paylater/plans/list.json';
+        if (status) url += '?status=' + status;
+        return axios.get<ApiResponse<PayLaterInstallmentPlanInfoResponse[]>>(url);
+    },
+    getPayLaterPlan: ({ id }: { id: string }): ApiResponsePromise<PayLaterInstallmentPlanInfoResponse> => {
+        return axios.get<ApiResponse<PayLaterInstallmentPlanInfoResponse>>('v1/paylater/plans/get.json?id=' + id);
+    },
+    addPayLaterPlan: (req: PayLaterPlanCreateRequest): ApiResponsePromise<PayLaterInstallmentPlanInfoResponse> => {
+        return axios.post<ApiResponse<PayLaterInstallmentPlanInfoResponse>>('v1/paylater/plans/add.json', req);
+    },
+    payPayLaterInstallment: (req: PayLaterInstallmentPayRequest): ApiResponsePromise<boolean> => {
+        return axios.post<ApiResponse<boolean>>('v1/paylater/plans/pay_installment.json', req);
+    },
+    deletePayLaterPlan: (req: PayLaterPlanDeleteRequest): ApiResponsePromise<boolean> => {
+        return axios.post<ApiResponse<boolean>>('v1/paylater/plans/delete.json', req);
     },
     getServerVersion: (): ApiResponsePromise<VersionInfo> => {
         return axios.get<ApiResponse<VersionInfo>>('v1/systems/version.json');

@@ -456,6 +456,13 @@ func startWebServer(c *core.CliContext) error {
 			apiV1Route.POST("/insights/explorers/move.json", bindApi(api.InsightsExplorers.InsightsExplorerMoveHandler))
 			apiV1Route.POST("/insights/explorers/delete.json", bindApi(api.InsightsExplorers.InsightsExplorerDeleteHandler))
 
+			// Pay Later Plans
+			apiV1Route.GET("/paylater/plans/list.json", bindApi(api.PayLaterPlans.PayLaterPlanListHandler))
+			apiV1Route.GET("/paylater/plans/get.json", bindApi(api.PayLaterPlans.PayLaterPlanGetHandler))
+			apiV1Route.POST("/paylater/plans/add.json", bindApi(api.PayLaterPlans.PayLaterPlanCreateHandler))
+			apiV1Route.POST("/paylater/plans/pay_installment.json", bindApi(api.PayLaterPlans.PayLaterInstallmentPayHandler))
+			apiV1Route.POST("/paylater/plans/delete.json", bindApi(api.PayLaterPlans.PayLaterPlanDeleteHandler))
+
 			// Large Language Models
 			if config.ReceiptImageRecognitionLLMConfig != nil && config.ReceiptImageRecognitionLLMConfig.LLMProvider != "" {
 				if config.TransactionFromAIImageRecognition {

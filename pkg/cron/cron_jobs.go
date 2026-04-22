@@ -30,3 +30,15 @@ var CreateScheduledTransactionJob = &CronJob{
 		return services.Transactions.CreateScheduledTransactions(c, time.Now().Unix(), c.GetInterval())
 	},
 }
+
+// PayLaterOverdueCheckJob represents the cron job which periodically marks overdue pay later installments
+var PayLaterOverdueCheckJob = &CronJob{
+	Name:        "PayLaterOverdueCheck",
+	Description: "Periodically mark pending pay later installments whose due date has passed as overdue.",
+	Period: CronJobFixedHourPeriod{
+		Hour: 1,
+	},
+	Run: func(c *core.CronContext) error {
+		return services.PayLaterPlans.MarkOverdueInstallments(c)
+	},
+}

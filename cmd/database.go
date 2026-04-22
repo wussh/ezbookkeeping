@@ -173,5 +173,21 @@ func updateAllDatabaseTablesStructure(c *core.CliContext) error {
 
 	log.BootInfof(c, "[database.updateAllDatabaseTablesStructure] insights explorer table maintained successfully")
 
+	err = datastore.Container.UserDataStore.SyncStructs(new(models.PayLaterInstallmentPlan))
+
+	if err != nil {
+		return err
+	}
+
+	log.BootInfof(c, "[database.updateAllDatabaseTablesStructure] pay later installment plan table maintained successfully")
+
+	err = datastore.Container.UserDataStore.SyncStructs(new(models.PayLaterInstallment))
+
+	if err != nil {
+		return err
+	}
+
+	log.BootInfof(c, "[database.updateAllDatabaseTablesStructure] pay later installment table maintained successfully")
+
 	return nil
 }
