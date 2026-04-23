@@ -49,6 +49,10 @@ import TagGroupListPage from '@/views/mobile/tags/GroupListPage.vue';
 
 import TemplateListPage from '@/views/mobile/templates/ListPage.vue';
 
+import PayLaterPlanListPage from '@/views/mobile/paylater/PlanListPage.vue';
+import PayLaterPlanEditPage from '@/views/mobile/paylater/PlanEditPage.vue';
+import PayLaterPlanDetailPage from '@/views/mobile/paylater/PlanDetailPage.vue';
+
 function asyncResolve(component: unknown): (ctx: Router.RouteCallbackCtx) => void {
     return function({ resolve }: { resolve: ({ component }: { component: unknown }) => void }): void {
         return resolve({
@@ -354,6 +358,21 @@ const routes: Router.RouteParameters[] = [
     {
         path: '/template/edit',
         async: asyncResolve(TransactionEditPage),
+        beforeEnter: [checkLogin]
+    },
+    {
+        path: '/paylater/plans',
+        async: asyncResolve(PayLaterPlanListPage),
+        beforeEnter: [checkLogin]
+    },
+    {
+        path: '/paylater/plans/add',
+        async: asyncResolve(PayLaterPlanEditPage),
+        beforeEnter: [checkLogin]
+    },
+    {
+        path: '/paylater/plans/detail',
+        async: asyncResolve(PayLaterPlanDetailPage),
         beforeEnter: [checkLogin]
     },
     {

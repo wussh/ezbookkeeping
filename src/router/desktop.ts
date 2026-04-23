@@ -34,6 +34,8 @@ import AppSettingsPage from '@/views/desktop/app/AppSettingsPage.vue';
 import ExchangeRatesListPage from '@/views/desktop/exchangerates/ListPage.vue';
 import AboutPage from '@/views/desktop/AboutPage.vue';
 
+import PayLaterPlansListPage from '@/views/desktop/paylater/ListPage.vue';
+
 function checkLogin(): NavigationGuardReturn {
     if (!isUserLogined()) {
         return {
@@ -184,6 +186,11 @@ const router = createRouter({
                 {
                     path: '/exchange_rates',
                     component: ExchangeRatesListPage,
+                    beforeEnter: checkLogin
+                },
+                {
+                    path: '/paylater/plans',
+                    component: PayLaterPlansListPage,
                     beforeEnter: checkLogin
                 },
                 {

@@ -91,6 +91,12 @@
                     </div>
                 </li>
                 <li class="nav-link">
+                    <router-link to="/paylater/plans">
+                        <v-icon class="nav-item-icon" :icon="mdiCreditCardClockOutline"/>
+                        <span class="nav-item-title">{{ tt('Pay Later Plans') }}</span>
+                    </router-link>
+                </li>
+                <li class="nav-link">
                     <router-link to="/exchange_rates">
                         <v-icon class="nav-item-icon" :icon="mdiSwapHorizontal"/>
                         <span class="nav-item-title">{{ tt('Exchange Rates Data') }}</span>
@@ -239,6 +245,7 @@ import {
     mdiChartPieOutline,
     mdiCompassOutline,
     mdiSwapHorizontal,
+    mdiCreditCardClockOutline,
     mdiCogOutline,
     mdiCellphone,
     mdiInformationOutline,
