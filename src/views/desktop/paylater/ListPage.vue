@@ -248,7 +248,7 @@ function createPlan(): void {
         creating.value = false;
         showCreateDialog.value = false;
         resetNewPlan();
-        snackbar.value?.showMessage('Pay later plan has been created');
+        snackbar.value?.showMessage(tt('Pay later plan has been created'));
     }).catch(error => {
         creating.value = false;
         if (!error.processed) {
@@ -282,7 +282,7 @@ function payInstallment(inst: PayLaterInstallmentResponse): void {
         utcOffset: utcOffset
     }).then(() => {
         paying.value[inst.id] = false;
-        snackbar.value?.showMessage('Installment has been paid');
+        snackbar.value?.showMessage(tt('Installment has been paid'));
         // Refresh detail
         if (selectedPlan.value) {
             payLaterStore.getPlan({ planId: selectedPlan.value.id }).then(result => {
@@ -298,14 +298,14 @@ function payInstallment(inst: PayLaterInstallmentResponse): void {
 }
 
 function remove(plan: PayLaterPlan): void {
-    confirmDialog.value?.open('Are you sure you want to delete this plan?').then(() => {
+    confirmDialog.value?.open(tt('Are you sure you want to delete this plan?')).then(() => {
         updating.value = true;
         planRemoving.value[plan.id] = true;
 
         payLaterStore.deletePlan({ id: plan.id }).then(() => {
             updating.value = false;
             planRemoving.value[plan.id] = false;
-            snackbar.value?.showMessage('Pay later plan has been deleted');
+            snackbar.value?.showMessage(tt('Pay later plan has been deleted'));
         }).catch(error => {
             updating.value = false;
             planRemoving.value[plan.id] = false;
@@ -321,7 +321,7 @@ function reload(): void {
 
     payLaterStore.loadAllPlans({ force: true }).then(() => {
         loading.value = false;
-        snackbar.value?.showMessage('Pay later plan list has been updated');
+        snackbar.value?.showMessage(tt('Pay later plan list has been updated'));
     }).catch(error => {
         loading.value = false;
         if (!error.processed) {

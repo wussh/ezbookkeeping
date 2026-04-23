@@ -301,14 +301,16 @@ func (s *PayLaterPlanService) MarkInstallmentPaid(c core.Context, uid int64, ins
 			}
 		}
 
-		// Update account balances
+		// Update account balances:
+		// Payment account (asset): money leaves, balance decreases
 		_, err2 = sess.Exec("UPDATE accounts SET balance=balance-? WHERE uid=? AND account_id=?",
 			installment.Amount, uid, plan.PaymentAccountId)
 		if err2 != nil {
 			return err2
 		}
 
-		_, err2 = sess.Exec("UPDATE accounts SET balance=balance-? WHERE uid=? AND account_id=?",
+		// Pay later account (liability): debt is reduced, balance increases (less negative)
+		_, err2 = sess.Exec("UPDATE accounts SET balance=balance+? WHERE uid=? AND account_id=?",
 			installment.Amount, uid, plan.AccountId)
 		if err2 != nil {
 			return err2
